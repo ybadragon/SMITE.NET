@@ -20,21 +20,65 @@ namespace SMITEAPI.Implementations
 
         public enum Call
         {
-            [Description("{0}{1}/{2}/{3}/{4}\n")]
+            [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             CreateSession,
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n")]
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetDataUsed,
+
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetPlayer,
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n")]
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetPlayerStatus,
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n")]
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetGods,
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n")]
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetItems,
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}\n")]
-            GetGodRecommendedItems
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
+            GetGodRecommendedItems,
+
+            [Description("{0}{1}/{2}/{3}{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
+            GetMatchDetails,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
+            GetMatchPlayerDetails,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
+            GetMatchIdsByQueue,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{queue}/{tier}/{season}")]
+            GetLeagueLeaderboard,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{queue}")]
+            GetLeagueSeasons,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}")]
+            GetMatchHistory,
+
+            [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
+            GetMotD,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6})\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}/{queue}")]
+            GetQueueStats,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/signature}/{session}/{timestamp}/{clanid}")]
+            GetTeamDetails,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/signature}/{session}/{timestamp}/{clanid}")]
+            GetTeamPlayers,
+
+            [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/signature}/{session}/{timestamp}")]
+            GetTopMatches,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/signature}/{session}/{timestamp}/{searchteam}")]
+            SearchTeams
+
         }
+
 
         public enum ReturnMethod
         {
