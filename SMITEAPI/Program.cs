@@ -17,15 +17,15 @@ namespace SMITEAPI
         static void Main(string[] args)
         {
             APISession session = null;
-            APIPlayer[] player = APICalls.APICall<APIPlayer[]>(APICalls.Call.GetPlayer, APICalls.ReturnMethod.JSON, ref session, "ybadragon");
-            //var queueStats = APICalls.APICall<object>(APICalls.Call.GetQueueStats, APICalls.ReturnMethod.JSON,ref session, "ybadragon", "451");
+            //APIPlayer[] player = APICalls.APICall<APIPlayer[]>(APICalls.Call.GetPlayer, APICalls.ReturnMethod.JSON, ref session, "ybadragon");
+            var objReturn = APICalls.APICall<object>(APICalls.Call.GetModeDetails, APICalls.ReturnMethod.JSON, ref session, "184868780");
             using (FileStream fs = File.Open(@"G:\JSONDebugging\debug.json", FileMode.Create))
             using (StreamWriter sw = new StreamWriter(fs))
             using (JsonWriter jw = new JsonTextWriter(sw))
             {
                 jw.Formatting = Formatting.Indented;
                 JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(jw, player);
+                serializer.Serialize(jw, objReturn);
                 //serializer.Serialize(jw, queueStats);
             }
 

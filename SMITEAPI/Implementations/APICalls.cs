@@ -18,18 +18,27 @@ namespace SMITEAPI.Implementations
         private const string AUTHKEY = "3548F1CF47504F1DAA55F3C5F9759EA7";
         //private const int DEVID = 1004;
         //private const string AUTHKEY = "23DF3C7E9BD14D84BF892AD206B6755C";
-        private static string API_URI = "http://api.smitegame.com/smiteapi.svc/{0}{1}/{2}/{3}/{4}";
-        private static string prefix = "http://api.smitegame.com/smiteapi.svc/";
-        private static string SignatureFormat = "{0}{1}{2}{3}";
-        private static SMITEAPIModel Context = new SMITEAPIModel();
+        private const string prefix = "http://api.smitegame.com/smiteapi.svc/";
+        private const string SignatureFormat = "{0}{1}{2}{3}";
+        public static SMITEAPIModel Context = new SMITEAPIModel();
 
         public enum Call
         {
-            [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
+            [Description("{0}{1}\n{callName}{ResponseFormat}")]
+            Ping,
+
+            [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/{signature}/{timestamp}")]
             CreateSession,
 
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
+            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
+            TestSession,
+
+            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
             GetDataUsed,
+
+            [Obsolete("Use APICalls.Call.GetMatchDetails", true)]
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}\nNOT WORKING")]
+            GetModeDetails,
 
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetPlayer,
@@ -111,7 +120,7 @@ namespace SMITEAPI.Implementations
 
         public static T APICall<T>(Call call, ReturnMethod type, ref APISession session, params string[] args)
         {
-            if (typeof(T) != typeof(APISession))
+            if (typeof(T) != typeof(APISession) && call != Call.Ping)
             {
                 session = GetLiveSession(ref session);
                 string id = session.session_id;
@@ -134,30 +143,35 @@ namespace SMITEAPI.Implementations
             {
                 result = sr.ReadToEnd();
             }
-            JsonSerializer serializer = new JsonSerializer();
             return JsonConvert.DeserializeObject<T>(result);
         }
 
         private static string FormatURL(Call call, ReturnMethod type, string[] args, APISession session = null)
         {
-            string dt = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
-            string mySig = GetMD5Hash(String.Format(SignatureFormat, DEVID, call.ToString().ToLower(), AUTHKEY, dt));
             string uri = "";
-            List<string> arguments = new List<string>
-                {
+            List<string> arguments = new List<string>()
+            {
                     call.ToString().ToLower(),
                     type.ToString().ToLower(),
+            };
+            if (call != Call.Ping)
+            {
+                string dt = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+                string mySig = GetMD5Hash(String.Format(SignatureFormat, DEVID, call.ToString().ToLower(), AUTHKEY, dt));
+                arguments.AddRange(new List<string>
+                {
                     DEVID.ToString(),
                     mySig,
-                };
-            if (session != null)
-            {
-                arguments.Add(session.session_id);
-            }
-            arguments.Add(dt);
-            if (args.Any())
-            {
-                arguments.AddRange(args.ToList());
+                });
+                if (session != null)
+                {
+                    arguments.Add(session.session_id);
+                }
+                arguments.Add(dt);
+                if (args.Any())
+                {
+                    arguments.AddRange(args.ToList());
+                }
             }
             string s = GetCallDescription(call);
             s = prefix + s;

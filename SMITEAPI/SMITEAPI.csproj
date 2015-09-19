@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementations\APICalls.cs" />
+    <Compile Include="Implementations\APIDataUsed.cs" />
     <Compile Include="Implementations\APIPlayer.cs" />
     <Compile Include="Implementations\APISession.cs" />
     <Compile Include="Program.cs" />
