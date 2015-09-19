@@ -68,6 +68,12 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SMITEAPI_DAL\SMITEAPI_DAL.csproj">
+      <Project>{8834ca73-b744-41d7-ae52-8472bbb6913e}</Project>
+      <Name>SMITEAPI_DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

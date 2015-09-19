@@ -7,6 +7,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using SMITEAPI_DAL;
+using APISession = SMITEAPI.Implementations.APISession;
 
 namespace SMITEAPI
 {
@@ -25,9 +27,12 @@ namespace SMITEAPI
             //}
 
             //create session
+            APICalls.Initialize();
+            APISession session = null;
+            var player = APICalls.APICall<object>(APICalls.Call.GetPlayer, APICalls.ReturnMethod.JSON, ref session, "ybadragon");
             WebRequest request = WebRequest.Create(APICalls.APICall(APICalls.Call.CreateSession, APICalls.ReturnMethod.JSON));
             WebResponse resp = request.GetResponse();
-            APISession session = new APISession();
+
             using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
             {
                 string s = sr.ReadToEnd();
@@ -35,7 +40,6 @@ namespace SMITEAPI
                 session = JsonConvert.DeserializeObject<APISession>(s);
                 Console.WriteLine();
             }
-
             request = WebRequest.Create(APICalls.APICall(APICalls.Call.GetDataUsed, APICalls.ReturnMethod.JSON, session));
             resp = request.GetResponse();
             using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
@@ -45,8 +49,8 @@ namespace SMITEAPI
                 var o = JsonConvert.DeserializeObject(s);
                 Console.WriteLine();
             }
-            //test comment 2
-            //Testing you fuckerrrrr
+
+
             ConsoleColor c = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Press any key to close.");
