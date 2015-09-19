@@ -16,18 +16,9 @@ namespace SMITEAPI
     {
         static void Main(string[] args)
         {
+            APICalls.SerializationPath = @"G:\JSONDebugging";
             APISession session = null;
-            //APIPlayer[] player = APICalls.APICall<APIPlayer[]>(APICalls.Call.GetPlayer, APICalls.ReturnMethod.JSON, ref session, "ybadragon");
-            var objReturn = APICalls.APICall<object>(APICalls.Call.GetModeDetails, APICalls.ReturnMethod.JSON, ref session, "184868780");
-            using (FileStream fs = File.Open(@"G:\JSONDebugging\debug.json", FileMode.Create))
-            using (StreamWriter sw = new StreamWriter(fs))
-            using (JsonWriter jw = new JsonTextWriter(sw))
-            {
-                jw.Formatting = Formatting.Indented;
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(jw, objReturn);
-                //serializer.Serialize(jw, queueStats);
-            }
+            var objReturn = APICalls.APICall<APIPlayer>(APICalls.Call.GetPlayer, APICalls.ReturnMethod.JSON, ref session, "ybadragon");
 
             ConsoleColor c = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;

@@ -16,6 +16,8 @@ namespace SMITEAPI.Implementations
     {
         private const int DEVID = 1277;
         private const string AUTHKEY = "3548F1CF47504F1DAA55F3C5F9759EA7";
+        private static string _SerializationPath;
+        private const string SERIALIZATION_DEBUG = @"{0}\{1}.json";
         //private const int DEVID = 1004;
         //private const string AUTHKEY = "23DF3C7E9BD14D84BF892AD206B6755C";
         private const string prefix = "http://api.smitegame.com/smiteapi.svc/";
@@ -99,6 +101,19 @@ namespace SMITEAPI.Implementations
             XML
         }
 
+        public static string SerializationPath
+        {
+            get { return _SerializationPath; }
+            set
+            {
+                if (value.EndsWith(@"\"))
+                {
+                    value = value.Remove(value.LastIndexOf(@"\"));
+                }
+                _SerializationPath = value;
+            }
+        }
+
         private static APISession GetLiveSession(ref APISession tempSession)
         {
             TimeSpan span = new TimeSpan(0, 15, 0);
@@ -143,7 +158,19 @@ namespace SMITEAPI.Implementations
             {
                 result = sr.ReadToEnd();
             }
-            return JsonConvert.DeserializeObject<T>(result);
+            T objReturn = JsonConvert.DeserializeObject<T[]>(result).First();
+#if DEBUG
+            using (FileStream fs = File.Open(String.Format(SERIALIZATION_DEBUG, SerializationPath, typeof(T).Name), FileMode.Create))
+            using (StreamWriter sw = new StreamWriter(fs))
+            using (JsonWriter jw = new JsonTextWriter(sw))
+            {
+                jw.Formatting = Formatting.Indented;
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(jw, objReturn);
+                //serializer.Serialize(jw, queueStats);
+            }
+#endif
+            return objReturn;
         }
 
         private static string FormatURL(Call call, ReturnMethod type, string[] args, APISession session = null)
