@@ -46,7 +46,7 @@ namespace SMITEAPI
                 Console.WriteLine();
             }
             //test comment 2
-            //test comment again
+            //Testing you fuckerrrrr
             ConsoleColor c = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Press any key to close.");
