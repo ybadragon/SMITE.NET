@@ -21,7 +21,7 @@ namespace SMITEAPI.Implementations
         private static string API_URI = "http://api.smitegame.com/smiteapi.svc/{0}{1}/{2}/{3}/{4}";
         private static string prefix = "http://api.smitegame.com/smiteapi.svc/";
         private static string SignatureFormat = "{0}{1}{2}{3}";
-        private static SMITEAPIModel Context;
+        private static SMITEAPIModel Context = new SMITEAPIModel();
 
         public enum Call
         {
@@ -67,7 +67,7 @@ namespace SMITEAPI.Implementations
             [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
             GetMotD,
 
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6})\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}/{queue}")]
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7})\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}/{queue}")]
             GetQueueStats,
 
             [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/signature}/{session}/{timestamp}/{clanid}")]
@@ -84,12 +84,13 @@ namespace SMITEAPI.Implementations
 
         }
 
-        public static void Initialize()
+        public enum ReturnMethod
         {
-            Context = new SMITEAPIModel();
+            JSON,
+            XML
         }
 
-        public static APISession GetLiveSession(ref APISession tempSession)
+        private static APISession GetLiveSession(ref APISession tempSession)
         {
             TimeSpan span = new TimeSpan(0, 15, 0);
             SMITEAPI_DAL.APISession session = Context.Sessions.OrderByDescending(x => x.timestamp).FirstOrDefault();
@@ -108,15 +109,9 @@ namespace SMITEAPI.Implementations
             return APICall<APISession>(Call.CreateSession, ReturnMethod.JSON, ref tempSession);
         }
 
-        public enum ReturnMethod
-        {
-            JSON,
-            XML
-        }
-
         public static T APICall<T>(Call call, ReturnMethod type, ref APISession session, params string[] args)
         {
-            if (session == null && typeof(T) != typeof(APISession))
+            if (typeof(T) != typeof(APISession))
             {
                 session = GetLiveSession(ref session);
                 string id = session.session_id;
@@ -143,7 +138,7 @@ namespace SMITEAPI.Implementations
             return JsonConvert.DeserializeObject<T>(result);
         }
 
-        public static string FormatURL(Call call, ReturnMethod type, string[] args, APISession session = null)
+        private static string FormatURL(Call call, ReturnMethod type, string[] args, APISession session = null)
         {
             string dt = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
             string mySig = GetMD5Hash(String.Format(SignatureFormat, DEVID, call.ToString().ToLower(), AUTHKEY, dt));
@@ -170,59 +165,6 @@ namespace SMITEAPI.Implementations
             return uri;
         }
 
-
-        public static string APICall(Call call, ReturnMethod type)
-        {
-            string dt = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
-            string mySig = GetMD5Hash(String.Format(SignatureFormat, DEVID, call.ToString().ToLower(), AUTHKEY, dt));
-            string mycall = String.Format(API_URI, call.ToString().ToLower(), type.ToString().ToLower(), DEVID,
-                mySig, dt);
-            return mycall;
-
-        }
-
-        public static string APICall(Call call, ReturnMethod type, string s)
-        {
-            string dt = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
-            string mySig = GetMD5Hash(String.Format(SignatureFormat, DEVID, call.ToString().ToLower(), AUTHKEY, dt));
-            string mycall = prefix + call.ToString().ToLower() + type.ToString().ToLower() + "/" + DEVID + "/" + mySig +
-                            "/" + s + "/" + dt;
-            return mycall;
-        }
-
-        public static string GetPlayer(Call call, ReturnMethod type, APISession session, params string[] playerName)
-        {
-            string dt = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
-            string mySig = GetMD5Hash(String.Format(SignatureFormat, DEVID, call.ToString().ToLower(), AUTHKEY, dt));
-            string mycall = prefix + call.ToString().ToLower() + type.ToString().ToLower() + "/" + DEVID + "/" + mySig +
-                            "/" + session.session_id + "/" + dt + "/" + playerName;
-            return mycall;
-        }
-
-        public static string APICall(Call call, ReturnMethod type, APISession session, params string[] args)
-        {
-            string dt = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
-            string mySig = GetMD5Hash(String.Format(SignatureFormat, DEVID, call.ToString().ToLower(), AUTHKEY, dt));
-            string uri = "";
-            List<string> arguments = new List<string>
-                {
-                    call.ToString().ToLower(),
-                    type.ToString().ToLower(),
-                    DEVID.ToString(),
-                    mySig,
-                    session.session_id,
-                    dt
-                };
-            if (args.Any())
-            {
-                arguments.AddRange(args.ToList());
-            }
-            string s = GetCallDescription(call);
-            s = prefix + s;
-            uri = String.Format(s, arguments.ToArray());
-            return uri;
-        }
-
         private static string GetCallDescription(Call call)
         {
             var type = typeof(Call);
@@ -232,8 +174,6 @@ namespace SMITEAPI.Implementations
             description = description.Substring(0, description.IndexOf("\n"));
             return description.Trim();
         }
-
-        //public static string APICall(Call call, ReturnMethod type, Session session)
 
         private static string GetMD5Hash(string input)
         {

@@ -16,40 +16,18 @@ namespace SMITEAPI
     {
         static void Main(string[] args)
         {
-            //WebRequest request = WebRequest.Create("http://api.smitegame.com/smiteapi.svc/pingjson");
-            //WebResponse resp = request.GetResponse();
-            //using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
-            //{
-            //    while (!sr.EndOfStream)
-            //    {
-            //        Console.WriteLine(sr.ReadLine());
-            //    }
-            //}
-
-            //create session
-            APICalls.Initialize();
             APISession session = null;
-            var player = APICalls.APICall<object>(APICalls.Call.GetPlayer, APICalls.ReturnMethod.JSON, ref session, "ybadragon");
-            WebRequest request = WebRequest.Create(APICalls.APICall(APICalls.Call.CreateSession, APICalls.ReturnMethod.JSON));
-            WebResponse resp = request.GetResponse();
-
-            using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
+            APIPlayer[] player = APICalls.APICall<APIPlayer[]>(APICalls.Call.GetPlayer, APICalls.ReturnMethod.JSON, ref session, "ybadragon");
+            //var queueStats = APICalls.APICall<object>(APICalls.Call.GetQueueStats, APICalls.ReturnMethod.JSON,ref session, "ybadragon", "451");
+            using (FileStream fs = File.Open(@"G:\JSONDebugging\debug.json", FileMode.Create))
+            using (StreamWriter sw = new StreamWriter(fs))
+            using (JsonWriter jw = new JsonTextWriter(sw))
             {
-                string s = sr.ReadToEnd();
+                jw.Formatting = Formatting.Indented;
                 JsonSerializer serializer = new JsonSerializer();
-                session = JsonConvert.DeserializeObject<APISession>(s);
-                Console.WriteLine();
+                serializer.Serialize(jw, player);
+                //serializer.Serialize(jw, queueStats);
             }
-            request = WebRequest.Create(APICalls.APICall(APICalls.Call.GetDataUsed, APICalls.ReturnMethod.JSON, session));
-            resp = request.GetResponse();
-            using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
-            {
-                string s = sr.ReadToEnd();
-                JsonSerializer serializer = new JsonSerializer();
-                var o = JsonConvert.DeserializeObject(s);
-                Console.WriteLine();
-            }
-
 
             ConsoleColor c = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
