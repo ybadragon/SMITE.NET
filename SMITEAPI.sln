@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMITEAPI", "SMITEAPI\SMITEAPI.csproj", "{003447AB-39E8-43B0-88DF-0A89C90FDA8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMITEAPI_DAL", "SMITEAPI_DAL\SMITEAPI_DAL.csproj", "{8834CA73-B744-41D7-AE52-8472BBB6913E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{003447AB-39E8-43B0-88DF-0A89C90FDA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{003447AB-39E8-43B0-88DF-0A89C90FDA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{003447AB-39E8-43B0-88DF-0A89C90FDA8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8834CA73-B744-41D7-AE52-8472BBB6913E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8834CA73-B744-41D7-AE52-8472BBB6913E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8834CA73-B744-41D7-AE52-8472BBB6913E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8834CA73-B744-41D7-AE52-8472BBB6913E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
