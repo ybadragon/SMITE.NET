@@ -45,7 +45,8 @@ namespace SMITEAPI
                 var o = JsonConvert.DeserializeObject(s);
                 Console.WriteLine();
             }
-            //test comment
+            //test comment 2
+            //test comment again
             ConsoleColor c = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Press any key to close.");
