@@ -38,9 +38,9 @@ namespace SMITEAPI.Implementations
             [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
             GetDataUsed,
 
-            [Obsolete("Use APICalls.Call.GetMatchDetails", true)]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}\nNOT WORKING")]
-            GetModeDetails,
+            //[Obsolete("Use APICalls.Call.GetMatchDetails", true)]
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}")]
+            GetDemoDetails,
 
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetPlayer,
@@ -57,7 +57,7 @@ namespace SMITEAPI.Implementations
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetGodRecommendedItems,
 
-            [Description("{0}{1}/{2}/{3}{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}")]
             GetMatchDetails,
 
             [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
@@ -158,9 +158,9 @@ namespace SMITEAPI.Implementations
             {
                 result = sr.ReadToEnd();
             }
-            T objReturn = JsonConvert.DeserializeObject<T[]>(result).First();
+            T objReturn = JsonConvert.DeserializeObject<T>(result);
 #if DEBUG
-            using (FileStream fs = File.Open(String.Format(SERIALIZATION_DEBUG, SerializationPath, typeof(T).Name), FileMode.Create))
+            using (FileStream fs = File.Open(String.Format(SERIALIZATION_DEBUG, SerializationPath, call), FileMode.Create))
             using (StreamWriter sw = new StreamWriter(fs))
             using (JsonWriter jw = new JsonTextWriter(sw))
             {

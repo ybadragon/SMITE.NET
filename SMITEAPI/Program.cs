@@ -18,7 +18,7 @@ namespace SMITEAPI
         {
             APICalls.SerializationPath = @"G:\JSONDebugging";
             APISession session = null;
-            var objReturn = APICalls.APICall<APIPlayer>(APICalls.Call.GetPlayer, APICalls.ReturnMethod.JSON, ref session, "ybadragon");
+            var objReturn = APICalls.APICall<object>(APICalls.Call.GetMatchDetails, APICalls.ReturnMethod.JSON, ref session, "184868780");
 
             ConsoleColor c = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
