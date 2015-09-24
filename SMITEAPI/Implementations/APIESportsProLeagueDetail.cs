@@ -32,7 +32,7 @@ namespace SMITEAPI.Implementations
         [JsonProperty("region")]
         public string RegionCode { get; set; }
         [JsonProperty("ret_msg")]
-        public string ReturnMessaget { get; set; }
+        public string ReturnMessage { get; set; }
         [JsonProperty("tournament_name")]
         public string TournamentName { get; set; }
         [JsonProperty("winning_team_clan_id")]
