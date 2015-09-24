@@ -12,7 +12,7 @@ using SMITEAPI_DAL;
 
 namespace SMITEAPI.Implementations
 {
-    class APICalls
+    class APICall
     {
         private const int DEVID = 1277;
         private const string AUTHKEY = "3548F1CF47504F1DAA55F3C5F9759EA7";
@@ -24,7 +24,7 @@ namespace SMITEAPI.Implementations
         private const string SignatureFormat = "{0}{1}{2}{3}";
         public static SMITEAPIModel Context = new SMITEAPIModel();
 
-        public enum Call
+        public enum CallType
         {
             [Description("{0}{1}\n{callName}{ResponseFormat}")]
             Ping,
@@ -218,21 +218,21 @@ namespace SMITEAPI.Implementations
                     Context.Sessions.Remove(session);
                 }
             }
-            return APICall<APISession>(Call.CreateSession, ReturnMethod.JSON, ref tempSession);
+            return Call<APISession>(CallType.CreateSession, ReturnMethod.JSON, ref tempSession);
         }
 
         /// <summary>
-        /// Use this to make calls to the API
+        /// Use this to make calls to the API. If running in DEBUG this will automatically create a .json file with the response from the api call in the directory provided in APICall.SerializationPath.
         /// </summary>
         /// <typeparam name="T">This is the type that the return object is serialized into. The type returned depends on the Call type so look at the description of the Call to see the type required</typeparam>
-        /// <param name="call"></param>
-        /// <param name="type"></param>
-        /// <param name="session"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public static T APICall<T>(Call call, ReturnMethod type, ref APISession session, params string[] args)
+        /// <param name="call">This is the name of the method being called</param>
+        /// <param name="type">This is the response type</param>
+        /// <param name="session">Session can be null</param>
+        /// <param name="args">These are everything past the {timestamp} if there is one in the call description</param>
+        /// <returns>T</returns>
+        public static T Call<T>(CallType call, ReturnMethod type, ref APISession session, params string[] args)
         {
-            if (typeof(T) != typeof(APISession) && call != Call.Ping)
+            if (typeof(T) != typeof(APISession) && call != CallType.Ping)
             {
                 session = GetLiveSession(ref session);
                 string id = session.session_id;
@@ -270,7 +270,7 @@ namespace SMITEAPI.Implementations
             return objReturn;
         }
 
-        private static string FormatURL(Call call, ReturnMethod type, string[] args, APISession session = null)
+        private static string FormatURL(CallType call, ReturnMethod type, string[] args, APISession session = null)
         {
             string uri = "";
             List<string> arguments = new List<string>()
@@ -278,7 +278,7 @@ namespace SMITEAPI.Implementations
                     call.ToString().ToLower(),
                     type.ToString().ToLower(),
             };
-            if (call != Call.Ping)
+            if (call != CallType.Ping)
             {
                 string dt = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
                 string mySig = GetMD5Hash(String.Format(SignatureFormat, DEVID, call.ToString().ToLower(), AUTHKEY, dt));
@@ -303,9 +303,9 @@ namespace SMITEAPI.Implementations
             return uri;
         }
 
-        private static string GetCallDescription(Call call)
+        private static string GetCallDescription(CallType call)
         {
-            var type = typeof(Call);
+            var type = typeof(CallType);
             var memInfo = type.GetMember(call.ToString());
             var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
             var description = ((DescriptionAttribute)attributes[0]).Description;

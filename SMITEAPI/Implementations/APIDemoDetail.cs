@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace SMITEAPI.Implementations
 {
-    public class APIDemoDetails
+    public class APIDemoDetail
     {
         [JsonProperty("Ban1")]
         public string Ban1 { get; set; }

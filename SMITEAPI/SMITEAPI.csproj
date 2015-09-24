@@ -56,9 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementations\APICalls.cs" />
+    <Compile Include="Implementations\APICall.cs" />
     <Compile Include="Implementations\APIDataUsed.cs" />
-    <Compile Include="Implementations\APIDemoDetails.cs" />
+    <Compile Include="Implementations\APIDemoDetail.cs" />
     <Compile Include="Implementations\APIESportsProLeagueDetail.cs" />
     <Compile Include="Implementations\APIPlayer.cs" />
     <Compile Include="Implementations\APIPlayerAchievement.cs" />
