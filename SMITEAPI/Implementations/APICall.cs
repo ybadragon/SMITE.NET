@@ -26,42 +26,43 @@ namespace SMITEAPI.Implementations
 
         public enum CallType
         {
+            [ReturnType(typeof(string))]
             [Description("{0}{1}\n{callName}{ResponseFormat}")]
             Ping,
-
+            [ReturnType(typeof(APISession))]
             [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/{signature}/{timestamp}")]
             CreateSession,
-
+            [ReturnType(typeof(string))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
             TestSession,
-
+            [ReturnType(typeof(APIDataUsed))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
             GetDataUsed,
-
+            [ReturnType(typeof(APIDemoDetail[]))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}")]
             GetDemoDetails,
-
+            [ReturnType(typeof(APIESportsProLeagueDetail[]))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
             GetEsportsProLeagueDetails,
-
+            [ReturnType(typeof(APIPlayerFriendInfo[]))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}")]
             GetFriends,
-
+            [ReturnType(typeof(APIGodRankInfo[]))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}")]
             GetGodRanks,
-
+            [ReturnType(typeof(APIPlayer[]))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetPlayer,
-
+            [ReturnType(typeof(APIPlayerStatus[]))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
             GetPlayerStatus,
-
+            [ReturnType(typeof(APIGodInfo[]))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{languageCode}")]
             GetGods,
-
+            [ReturnType(typeof(APIItemInfo[]))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{languageCode}")]
             GetItems,
-
+            [ReturnType(typeof(APIGodRecommendedItem[]))]
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{godId}/{languageCode}")]
             GetGodRecommendedItems,
             //stop here
@@ -255,7 +256,7 @@ namespace SMITEAPI.Implementations
             {
                 result = sr.ReadToEnd();
             }
-            T objReturn = JsonConvert.DeserializeObject<T>(result);
+            var objReturn = JsonConvert.DeserializeObject<T>(result);
 #if DEBUG
             using (FileStream fs = File.Open(String.Format(SERIALIZATION_DEBUG, SerializationPath, call), FileMode.Create))
             using (StreamWriter sw = new StreamWriter(fs))
@@ -311,6 +312,15 @@ namespace SMITEAPI.Implementations
             var description = ((DescriptionAttribute)attributes[0]).Description;
             description = description.Substring(0, description.IndexOf("\n"));
             return description.Trim();
+        }
+
+        private static Type GetCallReturnType(CallType call)
+        {
+            var type = typeof (CallType);
+            var memInfo = type.GetMember(call.ToString());
+            var attributes = memInfo[0].GetCustomAttributes(typeof (ReturnTypeAttribute), false);
+            var returnType = ((ReturnTypeAttribute) attributes[0]).Type;
+            return returnType;
         }
 
         private static string GetMD5Hash(string input)

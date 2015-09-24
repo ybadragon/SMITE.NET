@@ -71,6 +71,7 @@
     <Compile Include="Implementations\APISession.cs" />
     <Compile Include="Implementations\APITeamInfo.cs" />
     <Compile Include="Implementations\APITopMatch.cs" />
+    <Compile Include="Implementations\ReturnTypeAttribute.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
