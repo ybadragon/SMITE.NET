@@ -101,6 +101,83 @@ namespace SMITEAPI.Implementations
             XML
         }
 
+        public enum PlayerStatus
+        {
+            Offline,
+            InLobby,
+            GodSelection,
+            InGame,
+            Online,
+            Unknown
+        }
+
+        public enum Queue
+        {
+            Conquest5v5 = 423,
+            NoviceQueue = 424,
+            Conquest = 426,
+            Practice = 427,
+            ConquestChallenge = 429,
+            ConquestRanked = 430,
+            Domination = 433,
+            [Description("Use with MOTD_CLOSE (465) to get all MOTD matches.")]
+            MOTD = 434,
+            Arena = 435,
+            ArenaChallenge = 438,
+            DominationChallenge = 439,
+            JoustLeague = 440,
+            JoustChallenge = 441,
+            Assault = 445,
+            AssaultChallenge = 446,
+            Joust3v3 = 448,
+            ConquestLeague = 451,
+            ArenaLeague = 452,
+            MOTD_CLOSE = 465
+        }
+
+        public enum LanguageCode
+        {
+            English = 1,
+            German,
+            French,
+            Spanish,
+            Spanish_LatinAmerica,
+            Portuguese,
+            Russian,
+            Polish,
+            Turkish
+        }
+
+        public enum Tier
+        {
+            BronzeV = 1,
+            BronzeIV,
+            BronzeIII,
+            BronzeII,
+            BronzeI,
+            SilverV,
+            SilverIV,
+            SilverIII,
+            SilverII,
+            SilverI,
+            GoldV,
+            GoldIV,
+            GoldIII,
+            GoldII,
+            GoldI,
+            PlatinumV,
+            PlatinumIV,
+            PlatinumIII,
+            PlatinumII,
+            PlatinumI,
+            DiamondV,
+            DiamondIV,
+            DiamondIII,
+            DiamondII,
+            DiamondI,
+            MastersI
+        }
+
         public static string SerializationPath
         {
             get { return _SerializationPath; }
