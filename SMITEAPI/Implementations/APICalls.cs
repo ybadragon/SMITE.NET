@@ -75,7 +75,7 @@ namespace SMITEAPI.Implementations
             GetMatchHistory,
 
             [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
-            GetMotD,
+            GetMOTD,
 
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6})\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}/{queue}")]
             GetQueueStats,
