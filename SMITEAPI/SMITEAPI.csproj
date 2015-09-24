@@ -61,6 +61,7 @@
     <Compile Include="Implementations\APIPlayer.cs" />
     <Compile Include="Implementations\APIPlayerAchievement.cs" />
     <Compile Include="Implementations\APISession.cs" />
+    <Compile Include="Implementations\APITeamInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -16,10 +16,10 @@ namespace SMITEAPI
     {
         static void Main(string[] args)
         {
-            APICalls.SerializationPath = @"G:\JSONDebugging";
+            APICalls.SerializationPath = @"C:\Users\Chris\Desktop\MyTestingFolder";
             APISession session = null;
             APIPlayer player = APICalls.APICall<APIPlayer[]>(APICalls.Call.GetPlayer, APICalls.ReturnMethod.JSON, ref session, "ybadragon").First();
-            var PlayerAchievements = APICalls.APICall<object>(APICalls.Call.GetQueueStats, APICalls.ReturnMethod.JSON, ref session, player.ID.ToString(), ((int)APICalls.Queue.Joust3v3).ToString());
+            var objreturn = APICalls.APICall<object>(APICalls.Call.GetTopMatches, APICalls.ReturnMethod.JSON, ref session);
             ConsoleColor c = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Press any key to close.");
