@@ -81,7 +81,7 @@ namespace SMITEAPI.Implementations
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7})\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}/{queue}")]
             GetQueueStats,
 
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/signature}/{session}/{timestamp}/{clanid}")]
+            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{clanid}")]
             GetTeamDetails,
 
             [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/signature}/{session}/{timestamp}/{clanid}")]
