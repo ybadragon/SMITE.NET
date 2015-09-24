@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>JsonProperty</Title>
+      <Shortcut>propJ</Shortcut>
+      <Description>Creates a JsonProperty using Newtonsoft.json</Description>
+      <Author>Brian Thomason</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>Type</ID>
+          <ToolTip>Property Type</ToolTip>
+          <Default>Type</Default>
+        </Literal>
+        <Literal>
+          <ID>JsonName</ID>
+          <ToolTip>Name of the Json Property</ToolTip>
+          <Default>JsonName</Default>
+        </Literal>
+        <Literal>
+          <ID>PropertyName</ID>
+          <ToolTip>Name of the Property to be Serialized into</ToolTip>
+          <Default>PropertyName</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[          [JsonProperty("$JsonName$")]
+          public $Type$ $PropertyName$ { get; set; }
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

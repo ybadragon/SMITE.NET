@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace SMITEAPI.Implementations
 {
-    class APIESportsProLeagueDetail
+    public class APIESportsProLeagueDetail
     {
         [JsonProperty("away_team_clan_id")]
         public long AwayTeamID { get; set; }

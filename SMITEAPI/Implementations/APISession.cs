@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace SMITEAPI.Implementations
 {
-    class APISession
+    public class APISession
     {
         [JsonProperty("ret_msg")]
         public string ret_msg { get; set; }

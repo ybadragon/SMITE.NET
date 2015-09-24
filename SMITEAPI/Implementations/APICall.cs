@@ -12,7 +12,7 @@ using SMITEAPI_DAL;
 
 namespace SMITEAPI.Implementations
 {
-    class APICall
+    public class APICall
     {
         private const int DEVID = 1277;
         private const string AUTHKEY = "3548F1CF47504F1DAA55F3C5F9759EA7";

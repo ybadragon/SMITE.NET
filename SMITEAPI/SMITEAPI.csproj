@@ -60,8 +60,14 @@
     <Compile Include="Implementations\APIDataUsed.cs" />
     <Compile Include="Implementations\APIDemoDetail.cs" />
     <Compile Include="Implementations\APIESportsProLeagueDetail.cs" />
+    <Compile Include="Implementations\APIGodInfo.cs" />
+    <Compile Include="Implementations\APIGodRankInfo.cs" />
+    <Compile Include="Implementations\APIGodRecommendedItem.cs" />
+    <Compile Include="Implementations\APIItemInfo.cs" />
     <Compile Include="Implementations\APIPlayer.cs" />
     <Compile Include="Implementations\APIPlayerAchievement.cs" />
+    <Compile Include="Implementations\APIPlayerFriendInfo.cs" />
+    <Compile Include="Implementations\APIPlayerStatus.cs" />
     <Compile Include="Implementations\APISession.cs" />
     <Compile Include="Implementations\APITeamInfo.cs" />
     <Compile Include="Implementations\APITopMatch.cs" />
