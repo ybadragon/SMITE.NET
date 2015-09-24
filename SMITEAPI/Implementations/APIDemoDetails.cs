@@ -20,7 +20,7 @@ namespace SMITEAPI.Implementations
         [JsonProperty("Match")]
         public long MatchID { get; set; }
         [JsonProperty("Match_Time")]
-        TimeSpan MatchTime { get; set; }
+        public int MatchTime { get; set; }
         [JsonProperty("Offline_Spectators")]
         public long OfflineSpectators { get; set; }
         [JsonProperty("Realtime_Spectators")]
@@ -46,8 +46,8 @@ namespace SMITEAPI.Implementations
         [JsonProperty("Team2_Score")]
         public long Team2Score { get; set; }
         [JsonProperty("Winning_Team")]
-        public int WinningTeam { get; set; }
+        private int WinningTeam { get; set; }
         [JsonProperty("ret_msg")]
-        public string ReturnMessaget { get; set; }
+        public string ReturnMessage { get; set; }
     }
 }
