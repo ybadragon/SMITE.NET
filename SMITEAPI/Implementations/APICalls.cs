@@ -64,7 +64,7 @@ namespace SMITEAPI.Implementations
 
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{godId}/{languageCode}")]
             GetGodRecommendedItems,
-
+            //stop here
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}")]
             GetMatchDetails,
 
@@ -221,6 +221,15 @@ namespace SMITEAPI.Implementations
             return APICall<APISession>(Call.CreateSession, ReturnMethod.JSON, ref tempSession);
         }
 
+        /// <summary>
+        /// Use this to make calls to the API
+        /// </summary>
+        /// <typeparam name="T">This is the type that the return object is serialized into. The type returned depends on the Call type so look at the description of the Call to see the type required</typeparam>
+        /// <param name="call"></param>
+        /// <param name="type"></param>
+        /// <param name="session"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static T APICall<T>(Call call, ReturnMethod type, ref APISession session, params string[] args)
         {
             if (typeof(T) != typeof(APISession) && call != Call.Ping)
