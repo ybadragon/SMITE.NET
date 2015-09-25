@@ -14,12 +14,10 @@ namespace SMITEAPI.Implementations
 {
     public class APICall
     {
-        private const int DEVID = 1277;
-        private const string AUTHKEY = "3548F1CF47504F1DAA55F3C5F9759EA7";
+        private const int DEVID = ;
+        private const string AUTHKEY = "";
         private static string _SerializationPath;
         private const string SERIALIZATION_DEBUG = @"{0}\{1}.json";
-        //private const int DEVID = 1004;
-        //private const string AUTHKEY = "23DF3C7E9BD14D84BF892AD206B6755C";
         private const string prefix = "http://api.smitegame.com/smiteapi.svc/";
         private const string SignatureFormat = "{0}{1}{2}{3}";
         public static SMITEAPIModel Context = new SMITEAPIModel();
