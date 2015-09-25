@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace SMITEAPI.Implementations
 {
@@ -9,5 +10,7 @@ namespace SMITEAPI.Implementations
         {
             Type = type;
         }
+
+        public virtual string Description => typeof(Type).Name;
     }
 }

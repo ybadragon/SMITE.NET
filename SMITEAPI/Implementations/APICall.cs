@@ -14,54 +14,118 @@ namespace SMITEAPI.Implementations
 {
     public class APICall
     {
-        private const int DEVID = ;
-        private const string AUTHKEY = "";
+        private static int DEVID;
+        private static string AUTHKEY;
         private static string _SerializationPath;
         private const string SERIALIZATION_DEBUG = @"{0}\{1}.json";
-        private const string prefix = "http://api.smitegame.com/smiteapi.svc/";
+        //private const int DEVID = 1004;
+        //private const string AUTHKEY = "23DF3C7E9BD14D84BF892AD206B6755C";
+        private static string prefix;
         private const string SignatureFormat = "{0}{1}{2}{3}";
         public static SMITEAPIModel Context = new SMITEAPIModel();
+        public static string pingDescription;
+
+        public static void Initialize(int DeveloperID, string AuthorizationKey, string SerializationPath, string APIEndpoint)
+        {
+            DEVID = DeveloperID;
+            AUTHKEY = AuthorizationKey;
+            _SerializationPath = SerializationPath;
+            prefix = APIEndpoint;
+        }
+
 
         public enum CallType
         {
-            [ReturnType(typeof(string))]
-            [Description("{0}{1}\n{callName}{ResponseFormat}")]
+            /// <summary>
+            /// Test the connection to HiRez Servers
+            /// <para>Return Type : string</para>
+            /// <para>Required Params : </para>
+            /// </summary>
+            [Description("{0}{1}")]
             Ping,
-            [ReturnType(typeof(APISession))]
-            [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/{signature}/{timestamp}")]
+            /// <summary>
+            /// Create a new session
+            /// <para>Return Type : APISession</para>
+            /// <para>Required Params : </para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}")]
             CreateSession,
-            [ReturnType(typeof(string))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
+            /// <summary>
+            /// Test the current session
+            /// <para>Return Type : string</para>
+            /// <para>Required Params : </para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}")]
             TestSession,
-            [ReturnType(typeof(APIDataUsed))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
+            /// <summary>
+            /// Get data used for calls made today
+            /// <para>Return Type : APIDataUsed</para>
+            /// <para>Required Params : </para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}")]
             GetDataUsed,
-            [ReturnType(typeof(APIDemoDetail[]))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}")]
+            /// <summary>
+            /// Get basic match details
+            /// <para>Return Type : APIDemoDetail[]</para>
+            /// <para>Required Params : Match ID</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetDemoDetails,
-            [ReturnType(typeof(APIESportsProLeagueDetail[]))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
-            GetEsportsProLeagueDetails,
-            [ReturnType(typeof(APIPlayerFriendInfo[]))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}")]
+            /// <summary>
+            /// Get details about ESports matches
+            /// <para>Return Type : APIESportsProLeagueDetail[]</para>
+            /// <para>Required Params : </para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}")]
+            GetESportsProLeagueDetails,
+            /// <summary>
+            /// Get a list of the players friends
+            /// <para>Return Type : APIPlayerFriendInfo[]</para>
+            /// <para>Required Params : Player Name or Player ID</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetFriends,
-            [ReturnType(typeof(APIGodRankInfo[]))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}")]
+            /// <summary>
+            /// Get the god ranks for the player
+            /// <para>Return Type : APIGodRankInfo[]</para>
+            /// <para>Required Params : Player Name or Player ID</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetGodRanks,
-            [ReturnType(typeof(APIPlayer[]))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
+            /// <summary>
+            /// Get player details
+            /// <para>Return Type : APIPlayer[]</para>
+            /// <para>Required Params : Player Name</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetPlayer,
-            [ReturnType(typeof(APIPlayerStatus[]))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{playerName}")]
+            /// <summary>
+            /// Get status of the player
+            /// <para>Return Type : APIPlayerStatus[]</para>
+            /// <para>Required Params : Player Name</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetPlayerStatus,
-            [ReturnType(typeof(APIGodInfo[]))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{languageCode}")]
+            /// <summary>
+            /// Get details of all gods
+            /// <para>Return Type : APIGodInfo[]</para>
+            /// <para>Required Params : Language Code</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetGods,
-            [ReturnType(typeof(APIItemInfo[]))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{languageCode}")]
+            /// <summary>
+            /// Get details of all items
+            /// <para>Return Type : APIItemInfo[]</para>
+            /// <para>Required Params : Language Code</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetItems,
-            [ReturnType(typeof(APIGodRecommendedItem[]))]
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{godId}/{languageCode}")]
+            /// <summary>
+            /// Get all recommended items for the god
+            /// <para>Return Type : APIGodRecommendedItem[]</para>
+            /// <para>Required Params : God ID <para>Language Code</para></para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}")]
             GetGodRecommendedItems,
             //stop here
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}")]
@@ -308,7 +372,7 @@ namespace SMITEAPI.Implementations
             var memInfo = type.GetMember(call.ToString());
             var attributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
             var description = ((DescriptionAttribute)attributes[0]).Description;
-            description = description.Substring(0, description.IndexOf("\n"));
+            description = description.Contains("\n") ? description.Substring(0, description.IndexOf("\n")) : description;
             return description.Trim();
         }
 
