@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace SMITEAPI.Implementations
 {
     public class APIGodInfo
     {
-
         [JsonProperty("Ability1")]
         public string Ability1 { get; set; }
         [JsonProperty("Ability2")]

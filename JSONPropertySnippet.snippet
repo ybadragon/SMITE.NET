@@ -11,6 +11,16 @@
       </SnippetTypes>
     </Header>
     <Snippet>
+	  <References>
+		<Reference>
+			<Assembly>Newtonsoft.Json</Assembly>
+		</Reference>
+	  </References>
+	  <Imports>
+		<Import>
+			<Namespace>Newtonsoft.Json</Namespace>
+		</Import>
+	  </Imports>
       <Declarations>
         <Literal>
           <ID>Type</ID>
@@ -29,9 +39,8 @@
         </Literal>
       </Declarations>
       <Code Language="CSharp">
-        <![CDATA[          [JsonProperty("$JsonName$")]
-          public $Type$ $PropertyName$ { get; set; }
-        ]]>
+        <![CDATA[[JsonProperty("$JsonName$")]
+          public $Type$ $PropertyName$ { get; set; }]]>
       </Code>
     </Snippet>
   </CodeSnippet>

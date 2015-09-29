@@ -16,7 +16,7 @@ namespace SMITEAPI.Implementations
     {
         private static int DEVID;
         private static string AUTHKEY;
-        private static string _SerializationPath;
+        private static string SerializationPath;
         private const string SERIALIZATION_DEBUG = @"{0}\{1}.json";
         //private const int DEVID = 1004;
         //private const string AUTHKEY = "23DF3C7E9BD14D84BF892AD206B6755C";
@@ -25,11 +25,11 @@ namespace SMITEAPI.Implementations
         public static SMITEAPIModel Context = new SMITEAPIModel();
         public static string pingDescription;
 
-        public static void Initialize(int DeveloperID, string AuthorizationKey, string SerializationPath, string APIEndpoint)
+        public static void Initialize(int DeveloperID, string AuthorizationKey, string serializationPath, string APIEndpoint)
         {
             DEVID = DeveloperID;
             AUTHKEY = AuthorizationKey;
-            _SerializationPath = SerializationPath;
+            SerializationPath = serializationPath;
             prefix = APIEndpoint;
         }
 
@@ -127,44 +127,96 @@ namespace SMITEAPI.Implementations
             /// </summary>
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}")]
             GetGodRecommendedItems,
-            //stop here
+            /// <summary>
+            /// Returns statistics for a completed match
+            /// <para>Return Type : APIMatchDetails[]</para>
+            /// <para>Required Params : Match ID</para>
+            /// </summary>
             [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}")]
             GetMatchDetails,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{match_id}")]
+            /// <summary>
+            /// Returns player information for a live match
+            /// <para>Return Type : APIMatchPlayerDetails[]</para>
+            /// <para>Required Params : Match ID</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetMatchPlayerDetails,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{queue}/{date}/{hour}")]
+            /// <summary>
+            /// Returns all match IDs for a specific queue
+            /// <para>Return Type : APIMatchIDsByQueue[]</para>
+            /// <para>Required Params : Queue ID <para>Date <para>Hour</para></para></para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}")]
             GetMatchIdsByQueue,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{queue}/{tier}/{season}")]
+            /// <summary>
+            /// Returns the top players for a specific league
+            /// <para>Return Type : APILeagueLeaderboard[]</para>
+            /// <para>Required Params : Queue ID <para>Tier <para>Season Number</para></para></para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}")]
             GetLeagueLeaderboard,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{queue}")]
+            /// <summary>
+            /// Returns a list of seasons for a match queue including active season
+            /// <para>Return Type : APILeagueSeason[]</para>
+            /// <para>Required Params : Queue ID</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetLeagueSeasons,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}")]
+            /// <summary>
+            /// Returns recent matches and other information
+            /// <para>Return Type : APIMatchHistory[]</para>
+            /// <para>Required Params : Player Name or Player ID</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetMatchHistory,
-
-            [Description("{0}{1}/{2}/{3}/{4}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
+            /// <summary>
+            /// Returns information on the 20 most recent matches of the day
+            /// <para>Return Type : APIMatchOfTheDay[]</para>
+            /// <para>Required Params : </para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}")]
             GetMOTD,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6})\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}/{queue}")]
+            /// <summary>
+            /// Returns match summary for player queue by god
+            /// <para>Return Type : APIQueueStat[]</para>
+            /// <para>Required Params : Player Name or Player ID <para>Queue ID</para></para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}/{7}")]
             GetQueueStats,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{clanid}")]
+            /// <summary>
+            /// Returns team players and other information
+            /// <para>Return Type : APITeamInfo</para>
+            /// <para>Required Params : Clan ID</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetTeamDetails,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{clanid}")]
+            /// <summary>
+            /// Returns team information
+            /// <para>Return Type : APITeamPlayerInfo</para>
+            /// <para>Required Params : Clan ID</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetTeamPlayers,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}")]
+            /// <summary>
+            /// Lists 50 most watched and recent matches
+            /// <para>Return Type : APITopMatch[]</para>
+            /// <para>Required Params : </para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}")]
             GetTopMatches,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{teamName}")]
+            /// <summary>
+            /// Returns information for teams containing the team name provided
+            /// <para>Return Type : APITeamInfo</para>
+            /// <para>Required Params : Team Name</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             SearchTeams,
-
-            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}\n{callName}{ResponseFormat}/{developerId}/{signature}/{session}/{timestamp}/{player}")]
+            /// <summary>
+            /// Get all achievements for player
+            /// <para>Return Type : APIPlayerAchievement</para>
+            /// <para>Required Params : Player ID</para>
+            /// </summary>
+            [Description("{0}{1}/{2}/{3}/{4}/{5}/{6}")]
             GetPlayerAchievements
 
         }
@@ -250,19 +302,6 @@ namespace SMITEAPI.Implementations
             DiamondII,
             DiamondI,
             MastersI
-        }
-
-        public static string SerializationPath
-        {
-            get { return _SerializationPath; }
-            set
-            {
-                if (value.EndsWith(@"\"))
-                {
-                    value = value.Remove(value.LastIndexOf(@"\"));
-                }
-                _SerializationPath = value;
-            }
         }
 
         private static APISession GetLiveSession(ref APISession tempSession)

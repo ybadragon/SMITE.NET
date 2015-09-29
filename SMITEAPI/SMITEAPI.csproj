@@ -41,10 +41,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -64,12 +61,22 @@
     <Compile Include="Implementations\APIGodRankInfo.cs" />
     <Compile Include="Implementations\APIGodRecommendedItem.cs" />
     <Compile Include="Implementations\APIItemInfo.cs" />
+    <Compile Include="Implementations\APILeagueLeaderboard.cs" />
+    <Compile Include="Implementations\APILeagueSeason.cs" />
+    <Compile Include="Implementations\APIMatchDetails.cs" />
+    <Compile Include="Implementations\APIMatchHistory.cs" />
+    <Compile Include="Implementations\APIMatchIDsByQueue.cs" />
+    <Compile Include="Implementations\APIMatchOfTheDay.cs" />
+    <Compile Include="Implementations\APIMatchPlayerDetails.cs" />
     <Compile Include="Implementations\APIPlayer.cs" />
     <Compile Include="Implementations\APIPlayerAchievement.cs" />
     <Compile Include="Implementations\APIPlayerFriendInfo.cs" />
     <Compile Include="Implementations\APIPlayerStatus.cs" />
+    <Compile Include="Implementations\APIQueueStat.cs" />
     <Compile Include="Implementations\APISession.cs" />
+    <Compile Include="Implementations\APITeamDetail.cs" />
     <Compile Include="Implementations\APITeamInfo.cs" />
+    <Compile Include="Implementations\APITeamPlayerInfo.cs" />
     <Compile Include="Implementations\APITopMatch.cs" />
     <Compile Include="Implementations\ReturnTypeAttribute.cs" />
     <Compile Include="Program.cs" />
