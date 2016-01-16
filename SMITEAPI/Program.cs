@@ -16,6 +16,8 @@ namespace SMITEAPI
     {
         static void Main(string[] args)
         {
+
+            int DEVID = 0;
             APICall.Initialize(DEVID, "AUTHKEY", @"DEBUG_LOG_LOCATION", "http://api.smitegame.com/smiteapi.svc/");
             APISession session = null;
             APIGodInfo[] gods = APICall.Call<APIGodInfo[]>(APICall.CallType.GetGods, APICall.ReturnMethod.JSON, ref session, ((int)APICall.LanguageCode.English).ToString());
